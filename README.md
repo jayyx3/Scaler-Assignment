@@ -1,4 +1,4 @@
-# Zoom Workplace Clone - SDE Fullstack Web App
+# Zoom Workplace Clone
 
 A premium, full-stack video conferencing web application modeled after the official **Zoom Workplace Web App**. It features a modern, pixel-perfect dashboard, interactive video meeting rooms, real-time peer-to-peer WebRTC video/audio communication, instant messaging, screen sharing, and advanced host tools.
 
