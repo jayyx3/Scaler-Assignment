@@ -16,30 +16,36 @@ git push origin main
 
 ---
 
-## 🐍 Step 2: Deploy the Backend on Render
+## 🐍 Step 2: Deploy the Backend on Render (Free Tier)
 
-Render will host the FastAPI server and handle WebSocket signaling.
+Render will host the FastAPI server and handle WebSocket signaling. Choose **one** of the two free methods below:
 
-### What to Click & Where:
+### Option A: Using the Blueprint (Automatic)
 1. Open your browser and go to [Render Dashboard](https://dashboard.render.com/).
 2. Log in or Sign Up using your **GitHub account**.
-3. Click the **"New +"** button in the top right corner of the dashboard.
-4. Select **"Blueprint"** from the dropdown options.
-5. In the **"Connect a repository"** section:
-   - Find and select the `jayyx3/Scaler-Assignment` repository.
-   - If it is not listed, click **"Configure GitHub App"** to grant Render read permission to your repository, then select it.
-6. Under the **"Blueprint Blueprint Config"** page:
-   - Render will automatically read the `render.yaml` file in the root.
-   - Under **"Service Group Name"**, type a name (e.g., `scaler-zoom-group`).
-7. Click the **"Apply"** button at the bottom of the page.
-8. Render will now automatically initialize a Web Service named `scaler-zoom-backend` and start building the Python environment.
-9. Wait for the deploy log to show:
-   ```text
-   Application startup complete.
-   Uvicorn running on http://0.0.0.0:10000
-   ```
-10. Copy your **Service URL** displayed at the top left of the Render service dashboard (e.g., `https://scaler-zoom-backend.onrender.com`).
-    - *Let's refer to this URL as `YOUR_BACKEND_URL`.*
+3. Click the **"New +"** button (top right) and select **"Blueprint"**.
+4. Select the `jayyx3/Scaler-Assignment` repository.
+5. Under the Blueprint configuration page, Render will automatically detect the `render.yaml` file (configured for the **Free** tier).
+6. Give your service group a name and click **"Apply"**.
+7. Once successfully built, copy the generated **Service URL** (e.g., `https://scaler-zoom-backend.onrender.com`).
+   - *Let's refer to this URL as `YOUR_BACKEND_URL`.*
+
+### Option B: Manual Web Service Deployment (Recommended if Blueprint requests a card)
+1. Open your browser and go to [Render Dashboard](https://dashboard.render.com/).
+2. Click the **"New +"** button (top right) and select **"Web Service"**.
+3. Choose **"Build and deploy from a Git repository"** and click **"Next"**.
+4. Connect the `jayyx3/Scaler-Assignment` repository.
+5. In the settings form, write:
+   - **Name**: `scaler-zoom-backend`
+   - **Root Directory**: `backend`
+   - **Runtime**: `Python 3`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+6. Scroll down to the **"Instance Type"** section and select **"Free"** ($0/month).
+7. Click **"Create Web Service"** at the bottom of the page.
+8. Wait for the deploy log to show `Application startup complete`.
+9. Copy the generated **Service URL** at the top of the page.
+   - *Let's refer to this URL as `YOUR_BACKEND_URL`.*
 
 ---
 
