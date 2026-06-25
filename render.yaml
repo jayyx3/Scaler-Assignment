@@ -2,6 +2,7 @@ services:
   - type: web
     name: scaler-zoom-backend
     env: python
+    plan: free
     repo: https://github.com/jayyx3/Scaler-Assignment.git
     branch: main
     rootDir: backend
