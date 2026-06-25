@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import styles from "../meeting.module.css";
 
+const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const wsUrl = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000";
+
 interface ChatMessage {
   sender: string;
   message: string;
@@ -163,7 +166,7 @@ export default function MeetingRoom() {
 
     const verifyMeeting = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/meetings/${meetingId}`);
+        const res = await fetch(`${backendUrl}/api/meetings/${meetingId}`);
         if (!activeRef.current) return;
         if (res.ok) {
           const data = await res.json();
@@ -309,7 +312,7 @@ export default function MeetingRoom() {
     }
 
     // Connect to WebSocket signaling server
-    const socket = new WebSocket(`ws://localhost:8000/ws/meeting/${meetingId}?username=${encodeURIComponent(selectedName)}`);
+    const socket = new WebSocket(`${wsUrl}/ws/meeting/${meetingId}?username=${encodeURIComponent(selectedName)}`);
     wsRef.current = socket;
 
     socket.onopen = () => {
@@ -1170,7 +1173,8 @@ export default function MeetingRoom() {
                   <button 
                     className={styles.pillBtnSecondary}
                     onClick={() => {
-                      navigator.clipboard.writeText(`http://localhost:3000/meeting/${meetingId}`);
+                      const baseUrl = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
+                      navigator.clipboard.writeText(`${baseUrl}/meeting/${meetingId}`);
                       alert("Invite link copied!");
                     }}
                   >

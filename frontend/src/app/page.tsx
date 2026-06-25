@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./dashboard.module.css";
 
+const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
 interface Meeting {
   id: string;
   title: string;
@@ -91,8 +93,6 @@ export default function Dashboard() {
   // Fetch Meetings from API
   const fetchMeetings = async () => {
     try {
-      const backendUrl = "http://localhost:8000";
-      
       const upcomingRes = await fetch(`${backendUrl}/api/meetings/upcoming`);
       if (upcomingRes.ok) {
         const upcomingData = await upcomingRes.json();
@@ -118,7 +118,7 @@ export default function Dashboard() {
   // Actions
   const handleNewMeeting = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/meetings/instant", {
+      const response = await fetch(`${backendUrl}/api/meetings/instant`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -156,7 +156,7 @@ export default function Dashboard() {
     const cleanId = joinMeetingId.trim().replace(/\s+/g, "-");
 
     try {
-      const response = await fetch(`http://localhost:8000/api/meetings/${cleanId}`);
+      const response = await fetch(`${backendUrl}/api/meetings/${cleanId}`);
       if (response.ok) {
         setShowJoinModal(false);
         router.push(`/meeting/${cleanId}?username=${encodeURIComponent(joinDisplayName.trim())}`);
@@ -183,7 +183,7 @@ export default function Dashboard() {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/api/meetings/schedule", {
+      const response = await fetch(`${backendUrl}/api/meetings/schedule`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
