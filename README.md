@@ -144,3 +144,5 @@ Tracks participants joining/leaving meetings for the dashboard's "Recent Meeting
 - `display_name` (VARCHAR) - Joined participant's display name.
 - `joined_at` (DATETIME)
 - `left_at` (DATETIME, Nullable)
+
+Author Jay Joshi
